@@ -5,3 +5,5 @@
 ![New Image](https://github.com/umareddy-01/5512853_AnnapureddyUmaMaheswari/blob/main/GIT.jpeg?raw=true)
 
 ![Beginner Image](https://github.com/umareddy-01/5512853_AnnapureddyUmaMaheswari/blob/main/Essentials%20for%20C%20programming/Beginner.jpg?raw=true)
+
+![Intermediate Image](https://github.com/umareddy-01/5512853_AnnapureddyUmaMaheswari/blob/main/Essentials%20for%20C%20programming/Intermediate.jpg?raw=true)
