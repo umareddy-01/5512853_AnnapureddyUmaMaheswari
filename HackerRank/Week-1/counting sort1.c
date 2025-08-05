@@ -17,19 +17,52 @@ char** split_string(char*);
 int parse_int(char*);
 
 /*
- * Complete the 'lonelyinteger' function below.
+ * Complete the 'countingSort' function below.
  *
- * The function is expected to return an INTEGER.
- * The function accepts INTEGER_ARRAY a as parameter.
+ * The function is expected to return an INTEGER_ARRAY.
+ * The function accepts INTEGER_ARRAY arr as parameter.
  */
 
-int lonelyinteger(int a_count, int* a) {
-    int distinct=0;
-    int i;
-    for(i=0;i<a_count;i++){
-        distinct=distinct^a[i];
+/*
+ * To return the integer array from the function, you should:
+ *     - Store the size of the array to be returned in the result_count variable
+ *     - Allocate the array statically or dynamically
+ *
+ * For example,
+ * int* return_integer_array_using_static_allocation(int* result_count) {
+ *     *result_count = 5;
+ *
+ *     static int a[5] = {1, 2, 3, 4, 5};
+ *
+ *     return a;
+ * }
+ *
+ * int* return_integer_array_using_dynamic_allocation(int* result_count) {
+ *     *result_count = 5;
+ *
+ *     int *a = malloc(5 * sizeof(int));
+ *
+ *     for (int i = 0; i < 5; i++) {
+ *         *(a + i) = i + 1;
+ *     }
+ *
+ *     return a;
+ * }
+ *
+ */
+int* countingSort(int arr_count, int* arr, int* result_count) {
+    *result_count=100;
+    int i=0;
+    int* repetition=calloc(100,sizeof(int));
+    if(!repetition){
+        exit(1);
     }
-    return distinct;
+    
+    for(i=0;i<arr_count;i++){
+        repetition[arr[i]]++;
+    }
+    return repetition;
+
 
 }
 
@@ -39,19 +72,28 @@ int main()
 
     int n = parse_int(ltrim(rtrim(readline())));
 
-    char** a_temp = split_string(rtrim(readline()));
+    char** arr_temp = split_string(rtrim(readline()));
 
-    int* a = malloc(n * sizeof(int));
+    int* arr = malloc(n * sizeof(int));
 
     for (int i = 0; i < n; i++) {
-        int a_item = parse_int(*(a_temp + i));
+        int arr_item = parse_int(*(arr_temp + i));
 
-        *(a + i) = a_item;
+        *(arr + i) = arr_item;
     }
 
-    int result = lonelyinteger(n, a);
+    int result_count;
+    int* result = countingSort(n, arr, &result_count);
 
-    fprintf(fptr, "%d\n", result);
+    for (int i = 0; i < result_count; i++) {
+        fprintf(fptr, "%d", *(result + i));
+
+        if (i != result_count - 1) {
+            fprintf(fptr, " ");
+        }
+    }
+
+    fprintf(fptr, "\n");
 
     fclose(fptr);
 

@@ -17,19 +17,23 @@ char** split_string(char*);
 int parse_int(char*);
 
 /*
- * Complete the 'lonelyinteger' function below.
+ * Complete the 'diagonalDifference' function below.
  *
  * The function is expected to return an INTEGER.
- * The function accepts INTEGER_ARRAY a as parameter.
+ * The function accepts 2D_INTEGER_ARRAY arr as parameter.
  */
 
-int lonelyinteger(int a_count, int* a) {
-    int distinct=0;
-    int i;
-    for(i=0;i<a_count;i++){
-        distinct=distinct^a[i];
+int diagonalDifference(int arr_rows, int arr_columns, int** arr) {
+    int left_diagonal_sum=0;
+    int right_diagonal_sum=0;
+    int i=0;
+    for(i=0;i<arr_rows;i++){
+        left_diagonal_sum=left_diagonal_sum+arr[i][i];
+        right_diagonal_sum=right_diagonal_sum+arr[i][arr_columns-1-i];
+    
+        
     }
-    return distinct;
+    return abs(left_diagonal_sum-right_diagonal_sum);
 
 }
 
@@ -39,17 +43,21 @@ int main()
 
     int n = parse_int(ltrim(rtrim(readline())));
 
-    char** a_temp = split_string(rtrim(readline()));
-
-    int* a = malloc(n * sizeof(int));
+    int** arr = malloc(n * sizeof(int*));
 
     for (int i = 0; i < n; i++) {
-        int a_item = parse_int(*(a_temp + i));
+        *(arr + i) = malloc(n * (sizeof(int)));
 
-        *(a + i) = a_item;
+        char** arr_item_temp = split_string(rtrim(readline()));
+
+        for (int j = 0; j < n; j++) {
+            int arr_item = parse_int(*(arr_item_temp + j));
+
+            *(*(arr + i) + j) = arr_item;
+        }
     }
 
-    int result = lonelyinteger(n, a);
+    int result = diagonalDifference(n, n, arr);
 
     fprintf(fptr, "%d\n", result);
 

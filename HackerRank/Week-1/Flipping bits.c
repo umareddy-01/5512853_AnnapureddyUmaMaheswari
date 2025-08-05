@@ -12,24 +12,21 @@
 char* readline();
 char* ltrim(char*);
 char* rtrim(char*);
-char** split_string(char*);
 
 int parse_int(char*);
+long parse_long(char*);
 
 /*
- * Complete the 'lonelyinteger' function below.
+ * Complete the 'flippingBits' function below.
  *
- * The function is expected to return an INTEGER.
- * The function accepts INTEGER_ARRAY a as parameter.
+ * The function is expected to return a LONG_INTEGER.
+ * The function accepts LONG_INTEGER n as parameter.
  */
 
-int lonelyinteger(int a_count, int* a) {
-    int distinct=0;
-    int i;
-    for(i=0;i<a_count;i++){
-        distinct=distinct^a[i];
-    }
-    return distinct;
+long flippingBits(long n) {
+    unsigned number=(unsigned)n;
+    unsigned flipped=~number;
+    return (long)flipped;
 
 }
 
@@ -37,21 +34,15 @@ int main()
 {
     FILE* fptr = fopen(getenv("OUTPUT_PATH"), "w");
 
-    int n = parse_int(ltrim(rtrim(readline())));
+    int q = parse_int(ltrim(rtrim(readline())));
 
-    char** a_temp = split_string(rtrim(readline()));
+    for (int q_itr = 0; q_itr < q; q_itr++) {
+        long n = parse_long(ltrim(rtrim(readline())));
 
-    int* a = malloc(n * sizeof(int));
+        long result = flippingBits(n);
 
-    for (int i = 0; i < n; i++) {
-        int a_item = parse_int(*(a_temp + i));
-
-        *(a + i) = a_item;
+        fprintf(fptr, "%ld\n", result);
     }
-
-    int result = lonelyinteger(n, a);
-
-    fprintf(fptr, "%d\n", result);
 
     fclose(fptr);
 
@@ -146,30 +137,20 @@ char* rtrim(char* str) {
     return str;
 }
 
-char** split_string(char* str) {
-    char** splits = NULL;
-    char* token = strtok(str, " ");
-
-    int spaces = 0;
-
-    while (token) {
-        splits = realloc(splits, sizeof(char*) * ++spaces);
-
-        if (!splits) {
-            return splits;
-        }
-
-        splits[spaces - 1] = token;
-
-        token = strtok(NULL, " ");
-    }
-
-    return splits;
-}
-
 int parse_int(char* str) {
     char* endptr;
     int value = strtol(str, &endptr, 10);
+
+    if (endptr == str || *endptr != '\0') {
+        exit(EXIT_FAILURE);
+    }
+
+    return value;
+}
+
+long parse_long(char* str) {
+    char* endptr;
+    long value = strtol(str, &endptr, 10);
 
     if (endptr == str || *endptr != '\0') {
         exit(EXIT_FAILURE);
